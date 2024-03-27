@@ -11,14 +11,20 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@fontsource-variable/playfair-display": "^5.0.24",
+    "@fontsource/allison": "^5.0.19",
+    "@fontsource/fredericka-the-great": "^5.0.19",
+    "@fontsource/lato": "^5.0.20",
     "@libsql/client": "^0.5.6",
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",
     "@remix-run/serve": "^2.8.1",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.30.4",
+    "install": "^0.13.0",
     "isbot": "^4.1.0",
     "lucide-react": "^0.363.0",
+    "npm": "^10.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
