@@ -7,9 +7,11 @@ export const SiteHeader: FC<PropsWithChildren> = (props) => {
   return (
     <header className='h-14 bg-slate-200 shadow-md flex pt-4 px-2'>
       <div className='flex flex-row w-full justify-between'>
-        <h1 className='md:text-2xl font-site-logo ml-2'>
-          Grits, Greenbeans and Grandmothers
-        </h1>
+        <NavLink to='/'>
+          <h1 className='md:text-2xl font-site-logo ml-2'>
+            Grits, Greenbeans and Grandmothers
+          </h1>
+        </NavLink>
         <nav className='align-self-right mr-2'>
           <ul className='flex flex-row justify-between'>
             {props.children}
