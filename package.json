@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "grits-greenbeans-grandmothers",
   "private": true,
   "sideEffects": false,
   "type": "module",
@@ -19,6 +19,7 @@
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",
     "@remix-run/serve": "^2.8.1",
+    "clsx": "^2.1.0",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.30.4",
     "install": "^0.13.0",
