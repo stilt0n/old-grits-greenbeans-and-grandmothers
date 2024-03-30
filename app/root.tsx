@@ -7,6 +7,7 @@ import {
   ScrollRestoration,
 } from '@remix-run/react';
 import stylesheet from '~/tailwind.css?url';
+import { SiteHeader, SiteHeaderLink } from '~/components/layout/siteHeader';
 
 export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: stylesheet }];
@@ -31,5 +32,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <>
+      <SiteHeader>
+        <SiteHeaderLink to='/recipes'>Recipes</SiteHeaderLink>
+        <SiteHeaderLink to='/about'>About</SiteHeaderLink>
+      </SiteHeader>
+      <main className='mt-2'>
+        <Outlet />
+      </main>
+    </>
+  );
 }
