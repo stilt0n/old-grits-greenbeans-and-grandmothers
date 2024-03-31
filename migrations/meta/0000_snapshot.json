@@ -1,39 +1,9 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "da1faf85-172e-4b11-bbea-a3a9883f6c39",
+  "id": "c6375ec8-7f47-45ec-96db-ec0042262a39",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "authors": {
-      "name": "authors",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "bio": {
-          "name": "bio",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
     "ingredients": {
       "name": "ingredients",
       "columns": {
@@ -54,6 +24,13 @@
         "amount": {
           "name": "amount",
           "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "unit": {
+          "name": "unit",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -110,6 +87,13 @@
           "notNull": true,
           "autoincrement": false
         },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
         "instructions": {
           "name": "instructions",
           "type": "text",
@@ -117,15 +101,22 @@
           "notNull": true,
           "autoincrement": false
         },
-        "user_id": {
-          "name": "user_id",
-          "type": "integer",
+        "author": {
+          "name": "author",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
-        "author_id": {
-          "name": "author_id",
+        "image_url": {
+          "name": "image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "user_id": {
+          "name": "user_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
@@ -148,19 +139,6 @@
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "recipes_author_id_authors_id_fk": {
-          "name": "recipes_author_id_authors_id_fk",
-          "tableFrom": "recipes",
-          "tableTo": "authors",
-          "columnsFrom": [
-            "author_id"
           ],
           "columnsTo": [
             "id"

@@ -1,4 +1,4 @@
-import { createRecipe, createUser } from './operations';
+import { createRecipe, createUser, resetTables } from './operations';
 
 const seedUsers = async () => {
   const userId = await createUser({
@@ -55,6 +55,8 @@ const seedRecipes = async (userId: number) => {
 };
 
 const seedDatabase = async () => {
+  console.log('deleting old data from the database...');
+  await resetTables();
   console.log('seeding database...');
   const userId = await seedUsers();
   await seedRecipes(userId);

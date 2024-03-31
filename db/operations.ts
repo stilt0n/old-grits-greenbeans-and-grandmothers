@@ -76,3 +76,9 @@ export const createUser = async (userInfo: { name: string; email: string }) => {
     .returning({ userId: users.id });
   return result[0].userId;
 };
+
+export const resetTables = async () => {
+  await db.delete(users);
+  await db.delete(ingredients);
+  await db.delete(recipes);
+};
