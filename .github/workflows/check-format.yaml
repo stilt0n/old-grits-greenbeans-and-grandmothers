@@ -22,6 +22,4 @@ jobs:
       - name: Prettier Output
         if: ${{ failure() }}
         run: |
-          echo "Prettier found formatting issues in the follow files:"
-          echo "${{join(steps.format-check.outputs.*, '\n')}}"
-          echo "To fix these issues, run 'pnpm format' locally."
+          echo "Prettier found formatting issues (see logs above). To fix these issues, run 'pnpm format' locally."
