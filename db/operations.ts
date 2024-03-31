@@ -1,3 +1,4 @@
+import { desc } from 'drizzle-orm';
 import { db } from './db';
 import { recipes, ingredients, users } from './schema';
 
@@ -5,6 +6,7 @@ interface CreateRecipeArgs {
   name: string;
   instructions: string;
   createdBy: number;
+  description: string;
   author?: string;
   recipeIngredients?: {
     name: string;
@@ -49,6 +51,19 @@ export const createRecipe = async ({
       }))
     );
   });
+};
+
+export const getRecipeList = async () => {
+  return await db
+    .select({
+      name: recipes.name,
+      imageUrl: recipes.imageUrl,
+      author: recipes.author,
+      description: recipes.description,
+      id: recipes.id,
+    })
+    .from(recipes)
+    .orderBy(desc(recipes.createdAt));
 };
 
 /**

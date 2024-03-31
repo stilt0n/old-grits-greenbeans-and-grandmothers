@@ -12,7 +12,9 @@ const seedRecipes = async (userId: number) => {
   await createRecipe({
     name: 'Grits',
     instructions: 'Make some grits',
+    description: "Grandmother bot's take on a southern classic",
     createdBy: userId,
+    author: 'grandmother_bot',
     recipeIngredients: [
       { name: 'grits', amount: 1, unit: 'cup' },
       { name: 'water', amount: 2, unit: 'cup' },
@@ -24,7 +26,9 @@ const seedRecipes = async (userId: number) => {
   await createRecipe({
     name: 'Greenbeans',
     instructions: 'Make some greenbeans',
+    description: "Grandmother bot's favorite greenbeans",
     createdBy: userId,
+    author: 'grandmother_bot',
     recipeIngredients: [
       { name: 'greenbeans', amount: 0.5, unit: 'lb' },
       { name: 'butter', amount: 1, unit: 'tbsp' },
@@ -37,7 +41,9 @@ const seedRecipes = async (userId: number) => {
   await createRecipe({
     name: 'Mashed Potatoes',
     instructions: 'Make some mashed potatoes',
+    description: "Grandmother bot's mashed potatoes are so creamy you'll cry",
     createdBy: userId,
+    author: 'grandmother_bot',
     recipeIngredients: [
       { name: 'potatoes', amount: 2, unit: 'lb' },
       { name: 'butter', amount: 0.5, unit: 'cup' },

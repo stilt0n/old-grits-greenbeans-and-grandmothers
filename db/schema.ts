@@ -20,6 +20,7 @@ export type SelectUser = typeof users.$inferSelect;
 export const recipes = sqliteTable('recipes', {
   id: integer('id').primaryKey(),
   name: text('name').notNull(),
+  description: text('description').notNull(),
   instructions: text('instructions').notNull(),
   author: text('author'),
   imageUrl: text('image_url'),
