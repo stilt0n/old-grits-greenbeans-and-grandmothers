@@ -9,6 +9,8 @@
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "migrate:generate": "drizzle-kit generate:sqlite",
     "migrate:sync": "node --experimental-specifier-resolution=node --loader ts-node/esm ./scripts/migrate.ts",
     "migrate:seed": "node --experimental-specifier-resolution=node --loader ts-node/esm ./db/seed.ts"

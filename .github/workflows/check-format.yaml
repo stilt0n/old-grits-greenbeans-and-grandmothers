@@ -1,0 +1,27 @@
+name: Check Format
+
+on:
+  pull_request:
+
+jobs:
+  lint:
+    name: Check Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
+      - name: Get pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Install dependencies
+        run: pnpm install
+      - name: Check format
+        id: format-check
+        run: pnpm format:check >> "$GITHUB_OUTPUT"
+      - name: Prettier Output
+        if: ${{ failure() }}
+        run: |
+          echo "Prettier found formatting issues in the follow files:"
+          echo "${{join(steps.format-check.outputs.*, '\n')}}"
+          echo "To fix these issues, run 'pnpm format' locally."
