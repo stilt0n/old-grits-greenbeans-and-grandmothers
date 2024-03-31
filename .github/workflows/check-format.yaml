@@ -18,7 +18,7 @@ jobs:
         run: pnpm install
       - name: Check format
         id: format-check
-        run: pnpm format:check >> "$GITHUB_OUTPUT"
+        run: pnpm format:check
       - name: Prettier Output
         if: ${{ failure() }}
         run: |
