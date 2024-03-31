@@ -48,7 +48,7 @@ export const createRecipe = async ({
         ...ingredient,
         recipeId,
         createdAt,
-      }))
+      })),
     );
   });
 };
