@@ -28,10 +28,18 @@ jobs:
         run: |
           echo "Prettier found formatting issues (see logs above). To fix these issues, run 'pnpm format' locally."
 
-      - name: Lint Pull Request
+      - name: Lint
         id: lint-check
         run: pnpm lint
 
-      - name: Lint
+      - name: Lint Output
         if: ${{ failure() }}
         run: echo "ESLint found linting issues (see logs above). Run 'pnpm lint' locally and fix the issues."
+
+      - name: Typecheck
+        id: typecheck
+        run: pnpm typecheck
+
+      - name: Typecheck Output
+        if: ${{ failure() }}
+        run: echo "TypeScript found type errors (see logs above). Run 'pnpm typecheck' locally and fix the issues."
