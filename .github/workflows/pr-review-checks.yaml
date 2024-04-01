@@ -1,25 +1,37 @@
-name: Check Format
+name: Pull Request Checks
 
 on:
   pull_request:
 
 jobs:
-  lint:
-    name: Check Format
+  check-format:
+    name: Check Pull Request
     runs-on: ubuntu-latest
     steps:
       - name: Checkout PR
         uses: actions/checkout@v4
+
       - name: Get pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8
+
       - name: Install dependencies
         run: pnpm install
+
       - name: Check format
         id: format-check
         run: pnpm format:check
+
       - name: Prettier Output
         if: ${{ failure() }}
         run: |
           echo "Prettier found formatting issues (see logs above). To fix these issues, run 'pnpm format' locally."
+
+      - name: Lint Pull Request
+        id: lint-check
+        run: pnpm lint
+
+      - name: Lint
+        if: ${{ failure() }}
+        run: echo "ESLint found linting issues (see logs above). Run 'pnpm lint' locally and fix the issues."
