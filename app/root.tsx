@@ -37,6 +37,7 @@ export default function App() {
       <SiteHeader>
         <SiteHeaderLink to='/recipes'>Recipes</SiteHeaderLink>
         <SiteHeaderLink to='/about'>About</SiteHeaderLink>
+        <SiteHeaderLink to='/permissionsTest'>temporary</SiteHeaderLink>
       </SiteHeader>
       <main className='mt-2'>
         <Outlet />
