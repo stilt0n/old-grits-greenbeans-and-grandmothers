@@ -1,4 +1,4 @@
-import { LinksFunction } from '@remix-run/node';
+import { LinksFunction, LoaderFunction } from '@vercel/remix';
 import {
   Links,
   Meta,
@@ -6,12 +6,16 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react';
-import stylesheet from '~/tailwind.css?url';
+import { rootAuthLoader } from '@clerk/remix/ssr.server';
+import { ClerkApp } from '@clerk/remix';
 import { SiteHeader, SiteHeaderLink } from '~/components/layout/siteHeader';
+import stylesheet from '~/tailwind.css?url';
 
 export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: stylesheet }];
 };
+
+export const loader: LoaderFunction = (args) => rootAuthLoader(args);
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -31,7 +35,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
+const App = () => {
   return (
     <>
       <SiteHeader>
@@ -44,4 +48,6 @@ export default function App() {
       </main>
     </>
   );
-}
+};
+
+export default ClerkApp(App);
