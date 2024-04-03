@@ -16,7 +16,7 @@
     "migrate:seed": "node --experimental-specifier-resolution=node --loader ts-node/esm ./db/seed.ts"
   },
   "dependencies": {
-    "@clerk/remix": "^3.2.1",
+    "@clerk/remix": "4.0.0-beta.39",
     "@fontsource-variable/playfair-display": "^5.0.24",
     "@fontsource/allison": "^5.0.19",
     "@fontsource/fredericka-the-great": "^5.0.19",
