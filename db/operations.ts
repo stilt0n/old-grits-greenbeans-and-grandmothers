@@ -1,32 +1,51 @@
-import { desc } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 import { db } from './db';
-import { recipes, ingredients, users } from './schema';
+import { recipes, ingredients, authors } from './schema';
 
-interface CreateRecipeArgs {
+interface SharedCreateRecipeArgs {
   name: string;
   instructions: string;
-  createdBy: number;
   description: string;
-  author?: string;
   recipeIngredients?: {
     name: string;
     amount?: number;
     unit?: string;
   }[];
 }
-// Abstracted to its own function because a recipe is
-// split into two tables
+
+interface CreateRecipeWithNewAuthorArgs extends SharedCreateRecipeArgs {
+  author: {
+    name: string;
+    bio?: string;
+  };
+}
+interface CreateRecipeWithExistingAuthorArgs extends SharedCreateRecipeArgs {
+  authorId?: number;
+}
+
+type CreateRecipeArgs =
+  | (CreateRecipeWithNewAuthorArgs & { createAuthor: true })
+  | (CreateRecipeWithExistingAuthorArgs & { createAuthor?: false });
+
 export const createRecipe = async ({
   recipeIngredients,
-  createdBy,
   ...recipeItems
 }: CreateRecipeArgs) => {
   await db.transaction(async (trx) => {
+    let authorId;
+    if (recipeItems.createAuthor) {
+      authorId = await createAuthor(recipeItems.author);
+    } else {
+      authorId = recipeItems.authorId;
+    }
+
     const result = await trx
       .insert(recipes)
       .values({
-        ...recipeItems,
-        userId: createdBy,
+        name: recipeItems.name,
+        instructions: recipeItems.instructions,
+        description: recipeItems.description,
+        authorId,
       })
       .returning({ recipeId: recipes.id, createdAt: recipes.createdAt });
 
@@ -58,27 +77,32 @@ export const getRecipeList = async () => {
     .select({
       name: recipes.name,
       imageUrl: recipes.imageUrl,
-      author: recipes.author,
+      author: authors.name,
+      authorId: authors.id,
       description: recipes.description,
       id: recipes.id,
     })
     .from(recipes)
+    .leftJoin(authors, eq(recipes.authorId, authors.id))
     .orderBy(desc(recipes.createdAt));
 };
 
-/**
- * @returns the userId of the created user
+/** *
+ * @returns the id of the created author
  */
-export const createUser = async (userInfo: { name: string; email: string }) => {
+export const createAuthor = async (authorInfo: {
+  name: string;
+  bio?: string;
+}) => {
   const result = await db
-    .insert(users)
-    .values(userInfo)
-    .returning({ userId: users.id });
-  return result[0].userId;
+    .insert(authors)
+    .values(authorInfo)
+    .returning({ authorId: authors.id });
+  return result[0].authorId;
 };
 
 export const resetTables = async () => {
-  await db.delete(users);
+  await db.delete(authors);
   await db.delete(ingredients);
   await db.delete(recipes);
 };

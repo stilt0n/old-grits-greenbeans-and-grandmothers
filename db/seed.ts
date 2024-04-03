@@ -1,20 +1,19 @@
-import { createRecipe, createUser, resetTables } from './operations';
+import { createRecipe, createAuthor, resetTables } from './operations';
 
-const seedUsers = async () => {
-  const userId = await createUser({
+const seedAuthors = async () => {
+  const authorId = await createAuthor({
     name: 'grandmother_bot',
-    email: 'grandmother@botmail.com',
+    bio: 'The site mascot for Grits, Greenbeans and Grandmothers',
   });
-  return userId;
+  return authorId;
 };
 
-const seedRecipes = async (userId: number) => {
+const seedRecipes = async (authorId: number) => {
   await createRecipe({
     name: 'Grits',
     instructions: 'Make some grits',
     description: "Grandmother bot's take on a southern classic",
-    createdBy: userId,
-    author: 'grandmother_bot',
+    authorId,
     recipeIngredients: [
       { name: 'grits', amount: 1, unit: 'cup' },
       { name: 'water', amount: 2, unit: 'cup' },
@@ -27,8 +26,7 @@ const seedRecipes = async (userId: number) => {
     name: 'Greenbeans',
     instructions: 'Make some greenbeans',
     description: "Grandmother bot's favorite greenbeans",
-    createdBy: userId,
-    author: 'grandmother_bot',
+    authorId,
     recipeIngredients: [
       { name: 'greenbeans', amount: 0.5, unit: 'lb' },
       { name: 'butter', amount: 1, unit: 'tbsp' },
@@ -42,8 +40,7 @@ const seedRecipes = async (userId: number) => {
     name: 'Mashed Potatoes',
     instructions: 'Make some mashed potatoes',
     description: "Grandmother bot's mashed potatoes are so creamy you'll cry",
-    createdBy: userId,
-    author: 'grandmother_bot',
+    authorId,
     recipeIngredients: [
       { name: 'potatoes', amount: 2, unit: 'lb' },
       { name: 'butter', amount: 0.5, unit: 'cup' },
@@ -58,7 +55,7 @@ const seedDatabase = async () => {
   console.log('deleting old data from the database...');
   await resetTables();
   console.log('seeding database...');
-  const userId = await seedUsers();
+  const userId = await seedAuthors();
   await seedRecipes(userId);
   console.log('finished seeding database');
 };
