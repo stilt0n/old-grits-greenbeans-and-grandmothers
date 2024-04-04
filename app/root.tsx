@@ -7,7 +7,7 @@ import {
   ScrollRestoration,
 } from '@remix-run/react';
 import { rootAuthLoader } from '@clerk/remix/ssr.server';
-import { ClerkApp } from '@clerk/remix';
+import { ClerkApp, SignedIn } from '@clerk/remix';
 import { SiteHeader, SiteHeaderLink } from '~/components/layout/siteHeader';
 import stylesheet from '~/tailwind.css?url';
 
@@ -41,7 +41,9 @@ const App = () => {
       <SiteHeader>
         <SiteHeaderLink to='/recipes'>Recipes</SiteHeaderLink>
         <SiteHeaderLink to='/about'>About</SiteHeaderLink>
-        <SiteHeaderLink to='/permissionsTest'>temporary</SiteHeaderLink>
+        <SignedIn>
+          <SiteHeaderLink to='/permissionsTest'>temporary</SiteHeaderLink>
+        </SignedIn>
       </SiteHeader>
       <main className='mt-2'>
         <Outlet />

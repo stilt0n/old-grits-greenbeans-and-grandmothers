@@ -15,7 +15,7 @@ export const SiteHeader: FC<PropsWithChildren> = (props) => {
         <nav className='align-self-right mr-2'>
           <ul className='flex flex-row justify-between'>
             {props.children}
-            <SiteHeaderLink to='/auth' className='pl-2 md:pl-8'>
+            <SiteHeaderLink to='/sign-in' className='pl-2 md:pl-8'>
               <CircleUser className='w-8 h-8' />
             </SiteHeaderLink>
           </ul>
