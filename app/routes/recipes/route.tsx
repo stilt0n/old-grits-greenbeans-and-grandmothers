@@ -1,6 +1,6 @@
 import { useLoaderData } from '@remix-run/react';
 import { getRecipeList } from '../../../db/operations';
-import { RecipeCard } from './recipeCard';
+import { RecipeGrid } from './recipeGrid';
 
 export const loader = async () => {
   const recipes = await getRecipeList();
@@ -15,16 +15,9 @@ const Recipes = () => {
   }
 
   return (
-    <ul className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
-      {recipes?.map((recipe) => (
-        <RecipeCard
-          key={recipe.id}
-          title={recipe.name}
-          description={recipe.description}
-          author={recipe.author ?? undefined}
-        />
-      ))}
-    </ul>
+    <div className='p-4 md:p-8'>
+      <RecipeGrid recipes={recipes} />
+    </div>
   );
 };
 
