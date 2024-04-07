@@ -5,9 +5,12 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  isRouteErrorResponse,
+  useRouteError,
 } from '@remix-run/react';
 import { rootAuthLoader } from '@clerk/remix/ssr.server';
 import { ClerkApp, SignedIn } from '@clerk/remix';
+import { HandledError, UnhandledError } from '~/components/errors';
 import { SiteHeader, SiteHeaderLink } from '~/components/layout/siteHeader';
 import stylesheet from '~/tailwind.css?url';
 
@@ -49,6 +52,19 @@ const App = () => {
         <Outlet />
       </main>
     </>
+  );
+};
+
+export const ErrorBoundary = () => {
+  const error = useRouteError();
+  return (
+    <div className='p4'>
+      {isRouteErrorResponse(error) ? (
+        <HandledError error={error} />
+      ) : (
+        <UnhandledError error={error} />
+      )}
+    </div>
   );
 };
 
