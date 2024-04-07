@@ -1,6 +1,6 @@
 import { useLoaderData } from '@remix-run/react';
-import { Card } from '~/components/card';
 import { getRecipeList } from '../../../db/operations';
+import { RecipeCard } from './recipeCard';
 
 export const loader = async () => {
   const recipes = await getRecipeList();
@@ -15,13 +15,12 @@ const Recipes = () => {
   }
 
   return (
-    <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-5 justify-items-center'>
+    <ul className='flex flex-wrap justify-center gap-4'>
       {recipes?.map((recipe) => (
-        <Card
+        <RecipeCard
           key={recipe.id}
           title={recipe.name}
           description={recipe.description}
-          imageUrl='https://upload.wikimedia.org/wikipedia/commons/4/49/Grits_with_cheese%2C_bacon%2C_green_onion_and_poached_egg.jpg'
           author={recipe.author ?? undefined}
         />
       ))}
