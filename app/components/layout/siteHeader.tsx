@@ -5,7 +5,7 @@ import { NavLink } from '@remix-run/react';
 
 export const SiteHeader: FC<PropsWithChildren> = (props) => {
   return (
-    <header className='h-14 bg-slate-200 shadow-md flex pt-4 px-2'>
+    <header className='h-14 bg-site-blue-basic shadow-md flex pt-4 px-2'>
       <div className='flex flex-row w-full justify-between'>
         <NavLink to='/'>
           <h1 className='md:text-2xl font-site-logo ml-2'>
@@ -36,8 +36,8 @@ export const SiteHeaderLink: FC<SiteHeaderLinkProps> = (props) => {
       <NavLink to={props.to}>
         {({ isActive }) => (
           <div
-            className={clsx('text-center hover:bg-slate-500', {
-              'bg-slate-500': isActive,
+            className={clsx('text-center hover:bg-site-blue-bold', {
+              'bg-site-blue-bold': isActive,
             })}
           >
             {props.children}
