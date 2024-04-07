@@ -26,7 +26,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className='bg-gray-100'>
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -45,7 +45,7 @@ const App = () => {
           <SiteHeaderLink to='/permissionsTest'>temporary</SiteHeaderLink>
         </SignedIn>
       </SiteHeader>
-      <main className='mt-2'>
+      <main className='mt-2 px-6'>
         <Outlet />
       </main>
     </>

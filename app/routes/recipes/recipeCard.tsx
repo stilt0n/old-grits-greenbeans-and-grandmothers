@@ -26,18 +26,18 @@ export const RecipeCard: FC<RecipeCardProps> = ({
   author = 'Unknown author',
 }) => {
   return (
-    <li className='w-3/4 shadow-sm rounded-md py-3 bg-site-blue-dark'>
-      <div className='mb-2'>
-        <h1 className='text-2xl text-center font-site-heading font-bold'>
-          {title}
-        </h1>
-        <p className='text-l text-center font-site-text italic text-gray-700'>
-          {author}
-        </p>
+    <li className='rounded-lg bg-white shadow-md hover:shadow-lg overflow-hidden'>
+      <div className='m-2'>
+        <h1 className='font-bold text-center font-2xl'>{title}</h1>
       </div>
-      <img src={imageUrl} alt={title} className='w-full' />
-      <div className='mt-3'>
-        <p className='text-m font-site-text text-center'>{description}</p>
+      <img
+        src={imageUrl}
+        alt={title}
+        className='w-full h-64 md:h-56 object-cover'
+      />
+      <div className='m-4'>
+        <p className='block text-slate-700'>{author}</p>
+        <p className='text-m font-site-text'>{description}</p>
       </div>
     </li>
   );

@@ -15,7 +15,7 @@ const Recipes = () => {
   }
 
   return (
-    <ul className='flex flex-wrap justify-center gap-4'>
+    <ul className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
       {recipes?.map((recipe) => (
         <RecipeCard
           key={recipe.id}
