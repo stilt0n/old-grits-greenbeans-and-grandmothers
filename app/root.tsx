@@ -1,4 +1,4 @@
-import { LinksFunction /* ,LoaderFunction */ } from '@vercel/remix';
+import { LinksFunction, LoaderFunction } from '@vercel/remix';
 import {
   Links,
   Meta,
@@ -8,8 +8,8 @@ import {
   isRouteErrorResponse,
   useRouteError,
 } from '@remix-run/react';
-// import { rootAuthLoader } from '@clerk/remix/ssr.server';
-// import { ClerkApp, SignedIn } from '@clerk/remix';
+import { rootAuthLoader } from '@clerk/remix/ssr.server';
+import { ClerkApp, SignedIn } from '@clerk/remix';
 import { HandledError, UnhandledError } from '~/components/errors';
 import { SiteHeader, SiteHeaderLink } from '~/components/layout/siteHeader';
 import stylesheet from '~/tailwind.css?url';
@@ -18,7 +18,9 @@ export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: stylesheet }];
 };
 
-// export const loader: LoaderFunction = (args) => rootAuthLoader(args);
+export const loader: LoaderFunction = async (args) => {
+  return await rootAuthLoader(args);
+};
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -44,9 +46,9 @@ const App = () => {
       <SiteHeader>
         <SiteHeaderLink to='/recipes'>Recipes</SiteHeaderLink>
         <SiteHeaderLink to='/about'>About</SiteHeaderLink>
-        {/* <SignedIn> */}
-        <SiteHeaderLink to='/permissionsTest'>temporary</SiteHeaderLink>
-        {/* </SignedIn> */}
+        <SignedIn>
+          <SiteHeaderLink to='/permissionsTest'>temporary</SiteHeaderLink>
+        </SignedIn>
       </SiteHeader>
       <main className='mt-2 px-6'>
         <Outlet />
@@ -68,4 +70,4 @@ export const ErrorBoundary = () => {
   );
 };
 
-export default App;
+export default ClerkApp(App);
