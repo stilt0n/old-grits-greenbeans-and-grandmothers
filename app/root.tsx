@@ -1,4 +1,4 @@
-import { LinksFunction, LoaderFunction } from '@vercel/remix';
+import { LinksFunction /* ,LoaderFunction */ } from '@vercel/remix';
 import {
   Links,
   Meta,
@@ -8,7 +8,7 @@ import {
   isRouteErrorResponse,
   useRouteError,
 } from '@remix-run/react';
-import { rootAuthLoader } from '@clerk/remix/ssr.server';
+// import { rootAuthLoader } from '@clerk/remix/ssr.server';
 import { ClerkApp, SignedIn } from '@clerk/remix';
 import { HandledError, UnhandledError } from '~/components/errors';
 import { SiteHeader, SiteHeaderLink } from '~/components/layout/siteHeader';
@@ -18,7 +18,7 @@ export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: stylesheet }];
 };
 
-export const loader: LoaderFunction = (args) => rootAuthLoader(args);
+// export const loader: LoaderFunction = (args) => rootAuthLoader(args);
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
