@@ -19,6 +19,7 @@ export const links: LinksFunction = () => {
 };
 
 export const loader: LoaderFunction = async (args) => {
+  console.log(`Url: ${args?.request?.url}`);
   return await rootAuthLoader(args);
 };
 
