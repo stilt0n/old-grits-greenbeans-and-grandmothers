@@ -18,9 +18,7 @@ export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: stylesheet }];
 };
 
-export const loader: LoaderFunction = async (args) => {
-  return await rootAuthLoader(args);
-};
+export const loader: LoaderFunction = (args) => rootAuthLoader(args);
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
