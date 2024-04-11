@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@clerk/remix':
-    specifier: 4.0.0-beta.39
-    version: 4.0.0-beta.39(@remix-run/react@2.8.1)(@remix-run/server-runtime@2.8.1)(eslint@8.57.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.3)
+    specifier: 4.0.0-beta.41
+    version: 4.0.0-beta.41(@remix-run/react@2.8.1)(@remix-run/server-runtime@2.8.1)(eslint@8.57.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.3)
   '@fontsource-variable/playfair-display':
     specifier: ^5.0.24
     version: 5.0.24
@@ -439,8 +439,8 @@ packages:
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
 
-  /@clerk/backend@1.0.0-beta.32(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-6+PIJfnomgvWzapfXq19UkQpzS78EamXFqG0V9ah+qbm/VI8ROyNxnAZPPy+1hwFkFZpC0RVoxaEHUnTc9XKWg==}
+  /@clerk/backend@1.0.0-beta.33(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-NRiE4Me4mZnbQ8ldcIk11t0Bb1YCK/q1LxwzWNEMY2kfHyUxEGqXiQRED1ETRHj7d0Ln+q708eZiqRfWtn/W5Q==}
     engines: {node: '>=18.17.0'}
     dependencies:
       '@clerk/shared': 2.0.0-beta.21(react-dom@18.2.0)(react@18.2.0)
@@ -452,15 +452,15 @@ packages:
       - react-dom
     dev: false
 
-  /@clerk/clerk-react@5.0.0-beta.34(eslint@8.57.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.3):
-    resolution: {integrity: sha512-bvNKrT3MRBh5Ec8kqB6jPf2YbQqxfcu9T0N6K8hycH/odnF3Z8CB+anMh+ILks07ndE4i6u5YD1zoLwdx9j5Lg==}
+  /@clerk/clerk-react@5.0.0-beta.36(eslint@8.57.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.3):
+    resolution: {integrity: sha512-5p8q/FmA/OD2aX3iT/oYMTKvKBB+wFjxICLVCUQ4dCFooJN/I5lUDyFCdguZIDsXKxOTR8slYllL0vUn17brKw==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       react: '>=18'
       react-dom: '>=18'
     dependencies:
       '@clerk/shared': 2.0.0-beta.21(react-dom@18.2.0)(react@18.2.0)
-      '@clerk/types': 4.0.0-beta.23
+      '@clerk/types': 4.0.0-beta.25
       eslint-config-custom: 0.0.0(eslint@8.57.0)(typescript@5.4.3)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -472,8 +472,8 @@ packages:
       - typescript
     dev: false
 
-  /@clerk/remix@4.0.0-beta.39(@remix-run/react@2.8.1)(@remix-run/server-runtime@2.8.1)(eslint@8.57.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.3):
-    resolution: {integrity: sha512-wzMoCRhU0SFAxeDj8/itrFrHALytORCimIAxtHBapKWhezg8bZgm5O1sC6mnQrMYxtG4XRCOyyIraPMDKMr/7A==}
+  /@clerk/remix@4.0.0-beta.41(@remix-run/react@2.8.1)(@remix-run/server-runtime@2.8.1)(eslint@8.57.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.3):
+    resolution: {integrity: sha512-Eub6fsXUxU8U3cJwyOEDVkfjtBS/W5grtQBNkkJ/DcSM+YluqKhLkqQAs3vty5Dnpa+J2GN+qyU+bYnVHy8UAw==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       '@remix-run/react': ^2.0.0
@@ -481,8 +481,8 @@ packages:
       react: '>=18'
       react-dom: '>=18'
     dependencies:
-      '@clerk/backend': 1.0.0-beta.32(react-dom@18.2.0)(react@18.2.0)
-      '@clerk/clerk-react': 5.0.0-beta.34(eslint@8.57.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.3)
+      '@clerk/backend': 1.0.0-beta.33(react-dom@18.2.0)(react@18.2.0)
+      '@clerk/clerk-react': 5.0.0-beta.36(eslint@8.57.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.3)
       '@clerk/shared': 2.0.0-beta.21(react-dom@18.2.0)(react@18.2.0)
       '@remix-run/react': 2.8.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.3)
       '@remix-run/server-runtime': 2.8.1(typescript@5.4.3)
@@ -518,8 +518,8 @@ packages:
       swr: 2.2.0(react@18.2.0)
     dev: false
 
-  /@clerk/types@4.0.0-beta.23:
-    resolution: {integrity: sha512-tj3XtyDJC86qV9dNtkXbe9sy+DWbb35EhbeYuPn2hxI3r1Uq0TtaO+0VKijBsptEjsXw3KUHnMirSqvxJheahA==}
+  /@clerk/types@4.0.0-beta.25:
+    resolution: {integrity: sha512-yz+fKx0kZ8RUCw/7TqT2T9SSalOq9SPTCnp8WOkW8cD3kAGJCXPwz8e6kYYyQH6QFhws9DQFrylVVuN/QmK4rA==}
     engines: {node: '>=18.17.0'}
     dependencies:
       csstype: 3.1.1
@@ -1921,8 +1921,8 @@ packages:
     requiresBuild: true
     optional: true
 
-  /@rushstack/eslint-patch@1.10.1:
-    resolution: {integrity: sha512-S3Kq8e7LqxkA9s7HKLqXGTGck1uwis5vAXan3FnU5yw1Ec5hsSGnq4s/UCaSqABPOnOTg7zASLyst7+ohgWexg==}
+  /@rushstack/eslint-patch@1.10.2:
+    resolution: {integrity: sha512-hw437iINopmQuxWPSUEvqE56NCPsiU8N4AYtfHmJFckclktzK9YQJieD3XkDCDH4OjL+C7zgPUh73R/nrcHrqw==}
     dev: false
 
   /@ts-morph/common@0.11.1:
@@ -3100,7 +3100,7 @@ packages:
     resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
     dependencies:
       no-case: 3.0.4
-      tslib: 2.6.2
+      tslib: 2.4.1
     dev: false
 
   /dotenv@16.4.5:
@@ -3591,7 +3591,7 @@ packages:
         optional: true
     dependencies:
       '@next/eslint-plugin-next': 12.3.4
-      '@rushstack/eslint-patch': 1.10.1
+      '@rushstack/eslint-patch': 1.10.2
       '@typescript-eslint/parser': 5.62.0(eslint@8.57.0)(typescript@5.4.3)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
@@ -5070,7 +5070,7 @@ packages:
   /lower-case@2.0.2:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
     dependencies:
-      tslib: 2.6.2
+      tslib: 2.4.1
     dev: false
 
   /lru-cache@10.2.0:
@@ -5683,7 +5683,7 @@ packages:
     resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
     dependencies:
       lower-case: 2.0.2
-      tslib: 2.6.2
+      tslib: 2.4.1
     dev: false
 
   /node-domexception@1.0.0:
@@ -6699,7 +6699,7 @@ packages:
     resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}
     dependencies:
       dot-case: 3.0.4
-      tslib: 2.6.2
+      tslib: 2.4.1
     dev: false
 
   /snakecase-keys@5.4.4:
@@ -7131,10 +7131,6 @@ packages:
 
   /tslib@2.4.1:
     resolution: {integrity: sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==}
-    dev: false
-
-  /tslib@2.6.2:
-    resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
     dev: false
 
   /tsutils@3.21.0(typescript@5.4.3):
