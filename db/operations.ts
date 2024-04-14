@@ -106,3 +106,29 @@ export const resetTables = async () => {
   await db.delete(ingredients);
   await db.delete(recipes);
 };
+
+export const getRecipe = async (recipeId: number) => {
+  return await db.query.recipes.findFirst({
+    columns: {
+      name: true,
+      imageUrl: true,
+      instructions: true,
+      authorId: true,
+    },
+    with: {
+      ingredients: {
+        columns: {
+          name: true,
+          amount: true,
+          unit: true,
+        },
+      },
+      author: {
+        columns: {
+          name: true,
+        },
+      },
+    },
+    where: eq(recipes.id, recipeId),
+  });
+};
