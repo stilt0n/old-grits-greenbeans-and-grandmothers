@@ -28,7 +28,10 @@ export const recipes = sqliteTable('recipes', {
 
 export const recipeRelations = relations(recipes, ({ one, many }) => ({
   ingredients: many(ingredients),
-  author: one(authors),
+  author: one(authors, {
+    fields: [recipes.authorId],
+    references: [authors.id],
+  }),
 }));
 
 export type InsertRecipe = typeof recipes.$inferInsert;
@@ -50,7 +53,10 @@ export const ingredients = sqliteTable('ingredients', {
 });
 
 export const ingredientRelations = relations(ingredients, ({ one }) => ({
-  recipe: one(recipes),
+  recipe: one(recipes, {
+    fields: [ingredients.recipeId],
+    references: [recipes.id],
+  }),
 }));
 
 export type InsertIngredient = typeof ingredients.$inferInsert;
