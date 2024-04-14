@@ -22,6 +22,7 @@ export const RecipeGrid: FC<RecipeGridProps> = ({ recipes }) => {
           key={recipe.id}
           title={recipe.name}
           description={recipe.description}
+          id={recipe.id}
           author={recipe.author ?? undefined}
         />
       ))}

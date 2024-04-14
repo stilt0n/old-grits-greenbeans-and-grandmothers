@@ -6,15 +6,14 @@
  * component composable in the same way I did for the siteHeader component.
  */
 
+import { Link } from '@remix-run/react';
 import { FC } from 'react';
-
-// TODO: Replace this with my own image. Should probably not use wikipedia images for the site.
-const DEFAULT_IMAGE_URL =
-  'https://upload.wikimedia.org/wikipedia/commons/4/49/Grits_with_cheese%2C_bacon%2C_green_onion_and_poached_egg.jpg';
+import { DEFAULT_IMAGE_URL } from '~/utils/consts';
 
 interface RecipeCardProps {
   title: string;
   description: string;
+  id: number;
   imageUrl?: string;
   author?: string;
 }
@@ -22,14 +21,15 @@ interface RecipeCardProps {
 export const RecipeCard: FC<RecipeCardProps> = ({
   title,
   description,
+  id,
   imageUrl = DEFAULT_IMAGE_URL,
   author = 'Unknown author',
 }) => {
   return (
     <li className='rounded-lg bg-white shadow-md hover:shadow-lg overflow-hidden'>
-      <div className='m-2'>
+      <Link to={`/recipes/${id}`} className='m-2'>
         <h1 className='font-bold text-center font-2xl'>{title}</h1>
-      </div>
+      </Link>
       <img
         src={imageUrl}
         alt={title}
