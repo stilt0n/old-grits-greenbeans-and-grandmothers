@@ -21,7 +21,7 @@
     "@fontsource/allison": "^5.0.19",
     "@fontsource/fredericka-the-great": "^5.0.19",
     "@fontsource/lato": "^5.0.20",
-    "@libsql/client": "^0.5.6",
+    "@libsql/client": "^0.6.0",
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",
     "@remix-run/serve": "^2.8.1",
