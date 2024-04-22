@@ -8,6 +8,7 @@ import {
 import { getRecipe } from '../../../db/operations';
 import { HandledError, UnhandledError } from '~/components/errors';
 import { DEFAULT_IMAGE_URL } from '~/utils/consts';
+import { SignedIn } from '@clerk/remix';
 
 export const loader: LoaderFunction = async ({ params }) => {
   // the url param here is just a number which is a recipe id
@@ -46,6 +47,9 @@ const Recipe = () => {
           </li>
         ))}
       </ul>
+      <SignedIn>
+        <button>Edit Recipe</button>
+      </SignedIn>
     </div>
   );
 };
