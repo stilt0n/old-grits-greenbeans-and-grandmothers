@@ -1,25 +1,40 @@
-import type { Config } from 'tailwindcss';
+import type { Config } from "tailwindcss"
 
-export default {
-  content: ['./app/**/*.{js,jsx,ts,tsx}'],
+const config = {
+  darkMode: ["class"],
+  content: [
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+  ],
+  prefix: "",
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Lato', 'system-ui', 'sans-serif'],
-        allison: ['Allison', 'cursive'],
-        'site-logo': ['Fredericka the Great', 'system-ui', 'cursive'],
-        'site-text': ['Lato', 'sans-serif'],
-        'site-heading': ['Playfair Display Variable', 'sans-serif'],
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
       },
-      colors: {
-        'site-blue-lightest': '#8CB6D0',
-        'site-blue-light': '#6FB4DF',
-        'site-blue-basic': '#3C84B1',
-        'site-blue-bold': '#446D86',
-        'site-blue-dark': '#292F33',
-        'site-blue-darkest': '#21282E',
+    },
+    extend: {
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
-  plugins: [],
-} satisfies Config;
+  plugins: [require("tailwindcss-animate")],
+} satisfies Config
+
+export default config

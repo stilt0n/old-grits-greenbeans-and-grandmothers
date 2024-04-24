@@ -1,8 +1,4 @@
-@import '@fontsource/allison';
-@import '@fontsource/fredericka-the-great';
-@import '@fontsource/lato';
-@import '@fontsource-variable/playfair-display';
-
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
+  @tailwind components;
+  @tailwind utilities;
+  
