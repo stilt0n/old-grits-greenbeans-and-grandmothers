@@ -1,11 +1,3 @@
-/**
- * This is to replace ~/components/card.tsx
- *
- * The copilot generated layout for the card component was okay but I think it can be much better.
- * Since I only expect to use cards in the recipes route I think it doesn't make sense to make this
- * component composable in the same way I did for the siteHeader component.
- */
-
 import { Link, useNavigate } from '@remix-run/react';
 import { FC } from 'react';
 import { DEFAULT_IMAGE_URL } from '~/utils/consts';

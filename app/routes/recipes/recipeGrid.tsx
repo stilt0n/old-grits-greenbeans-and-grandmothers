@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { RecipeCard } from './recipeCard';
+import { RecipeCard } from '~/components/recipeCard';
 
 interface RecipeData {
   name: string;
