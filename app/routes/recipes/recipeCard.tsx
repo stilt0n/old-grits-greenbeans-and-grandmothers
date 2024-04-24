@@ -6,9 +6,17 @@
  * component composable in the same way I did for the siteHeader component.
  */
 
-import { Link } from '@remix-run/react';
+import { Link, useNavigate } from '@remix-run/react';
 import { FC } from 'react';
 import { DEFAULT_IMAGE_URL } from '~/utils/consts';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '~/components/ui/card';
 
 interface RecipeCardProps {
   title: string;
@@ -25,20 +33,26 @@ export const RecipeCard: FC<RecipeCardProps> = ({
   imageUrl = DEFAULT_IMAGE_URL,
   author = 'Unknown author',
 }) => {
+  const navigate = useNavigate();
   return (
-    <li className='rounded-lg bg-white shadow-md hover:shadow-lg overflow-hidden'>
-      <Link to={`/recipes/${id}`} className='m-2'>
-        <h1 className='font-bold text-center font-2xl'>{title}</h1>
-      </Link>
-      <img
-        src={imageUrl}
-        alt={title}
-        className='w-full h-64 md:h-56 object-cover'
-      />
-      <div className='m-4'>
-        <p className='block text-slate-700'>{author}</p>
-        <p className='text-m font-site-text'>{description}</p>
-      </div>
-    </li>
+    <Card
+      className='hover:shadow-md hover:cursor-pointer'
+      onClick={() => navigate(`/recipes/${id}`)}
+    >
+      <CardHeader>
+        <CardTitle>
+          <Link to={`/recipes/${id}`}>{title}</Link>
+        </CardTitle>
+        <CardDescription>{author}</CardDescription>
+        <CardContent className='px-0 mx-[-1.5rem]'>
+          <img
+            src={imageUrl}
+            alt={title}
+            className='w-full h-64 md:h-56 object-cover'
+          />
+        </CardContent>
+        <CardFooter>{description}</CardFooter>
+      </CardHeader>
+    </Card>
   );
 };
