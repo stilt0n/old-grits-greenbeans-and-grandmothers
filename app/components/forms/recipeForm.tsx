@@ -59,7 +59,7 @@ export const RecipeForm: FC<RecipeFormProps> = ({
         errorMessage={errors?.description?.message}
         {...register('description')}
       />
-      <FormInput label='Author' type='text' {...register('description')} />
+      <FormInput label='Author' type='text' {...register('author')} />
       <ul>
         {fields.map((ingredient, index) => (
           <li key={ingredient.id} className='grid grid-cols-7 gap-2 items-end'>
