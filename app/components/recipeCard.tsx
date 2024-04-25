@@ -1,5 +1,5 @@
 import { Link, useNavigate } from '@remix-run/react';
-import { FC } from 'react';
+import { FC, useId } from 'react';
 import { DEFAULT_IMAGE_URL } from '~/utils/consts';
 import {
   Card,
@@ -26,6 +26,7 @@ export const RecipeCard: FC<RecipeCardProps> = ({
   author = 'Unknown author',
 }) => {
   const navigate = useNavigate();
+  const descriptionId = useId();
   return (
     <Card
       className='hover:shadow-md hover:cursor-pointer'
@@ -33,7 +34,9 @@ export const RecipeCard: FC<RecipeCardProps> = ({
     >
       <CardHeader>
         <CardTitle>
-          <Link to={`/recipes/${id}`}>{title}</Link>
+          <Link to={`/recipes/${id}`} aria-describedby={descriptionId}>
+            {title}
+          </Link>
         </CardTitle>
         <CardDescription>{author}</CardDescription>
         <CardContent className='px-0 mx-[-1.5rem]'>
@@ -43,7 +46,7 @@ export const RecipeCard: FC<RecipeCardProps> = ({
             className='w-full h-64 md:h-56 object-cover'
           />
         </CardContent>
-        <CardFooter>{description}</CardFooter>
+        <CardFooter id={descriptionId}>{description}</CardFooter>
       </CardHeader>
     </Card>
   );
