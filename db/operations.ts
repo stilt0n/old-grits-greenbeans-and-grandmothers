@@ -31,7 +31,7 @@ export const createRecipe = async ({
   recipeIngredients,
   ...recipeItems
 }: CreateRecipeArgs) => {
-  await db.transaction(async (trx) => {
+  return await db.transaction(async (trx) => {
     let authorId;
     if (recipeItems.createAuthor) {
       authorId = await createAuthor(recipeItems.author);
@@ -57,18 +57,37 @@ export const createRecipe = async ({
       return;
     }
 
-    if (!recipeIngredients || recipeIngredients.length === 0) {
-      return;
-    }
-
     const { recipeId, createdAt } = result[0];
-    await trx.insert(ingredients).values(
-      recipeIngredients.map((ingredient) => ({
-        ...ingredient,
-        recipeId,
-        createdAt,
-      })),
-    );
+
+    if (recipeIngredients && recipeIngredients.length > 0) {
+      await trx.insert(ingredients).values(
+        recipeIngredients.map((ingredient) => ({
+          ...ingredient,
+          recipeId,
+          createdAt,
+        })),
+      );
+    }
+    return recipeId;
+  });
+};
+
+export const createRecipeInferAuthor = async ({
+  author = 'Unknown author',
+  ...args
+}: Omit<CreateRecipeWithExistingAuthorArgs, 'authorId'> & {
+  author?: string;
+}) => {
+  const result = await getAuthor(author);
+  const authorId = result?.[0]?.id;
+  if (authorId) {
+    await createRecipe({ ...args, authorId });
+    return;
+  }
+  return await createRecipe({
+    ...args,
+    author: { name: author },
+    createAuthor: true,
   });
 };
 
@@ -131,4 +150,18 @@ export const getRecipe = async (recipeId: number) => {
     },
     where: eq(recipes.id, recipeId),
   });
+};
+
+/**
+ * @param identifier | the author's name or the author's id
+ */
+export const getAuthor = async (identifier: string | number) => {
+  return await db
+    .select()
+    .from(authors)
+    .where(
+      typeof identifier === 'string'
+        ? eq(authors.name, identifier)
+        : eq(authors.id, identifier),
+    );
 };

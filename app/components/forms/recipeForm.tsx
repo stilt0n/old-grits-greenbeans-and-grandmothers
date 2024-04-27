@@ -19,10 +19,6 @@ export const useRecipeForm = (defaultValues: RecipeFormData) => {
     mode: 'onSubmit',
     resolver,
     defaultValues,
-    submitHandlers: {
-      onValid: (data) => console.log(data),
-      onInvalid: (data) => console.log(`invalid input!\n${data}`),
-    },
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -122,13 +118,13 @@ const recipeSchema = z.object({
   name: z.string().min(1, 'recipe name cannot be blank'),
   description: z
     .string()
-    .max(255, 'recipe description should be less than 255 characters')
-    .optional(),
+    .min(1, 'recipe description cannot be blank')
+    .max(255, 'recipe description should be less than 255 characters'),
   author: z.string().optional(),
   ingredients: z.array(ingredientSchema),
   instructions: z.string().min(1, 'recipe instructions cannot be blank'),
 });
 
-const resolver = zodResolver(recipeSchema);
+export const resolver = zodResolver(recipeSchema);
 
-type RecipeFormData = z.infer<typeof recipeSchema>;
+export type RecipeFormData = z.infer<typeof recipeSchema>;
