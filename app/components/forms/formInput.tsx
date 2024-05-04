@@ -13,7 +13,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
     return (
       <div className={className}>
         <Label htmlFor={inputId}>{label}</Label>
-        <Input ref={ref} id={inputId} {...inputProps} />
+        <Input ref={ref} id={inputId} autoComplete='off' {...inputProps} />
         {errorMessage ? <p className='text-red-800'>{errorMessage}</p> : null}
       </div>
     );
