@@ -53,20 +53,32 @@ export const createRecipe = async ({
     // we also should rollback the transaction if no insert
     // takes place
     if (result.length !== 1) {
+      console.log('rolling back transaction...');
+      console.log(`result of previous query:\n  ${result}`);
       await trx.rollback();
       return;
     }
 
     const { recipeId, createdAt } = result[0];
-
     if (recipeIngredients && recipeIngredients.length > 0) {
-      await trx.insert(ingredients).values(
-        recipeIngredients.map((ingredient) => ({
-          ...ingredient,
-          recipeId,
-          createdAt,
-        })),
-      );
+      const ingredientResult = await trx
+        .insert(ingredients)
+        .values(
+          recipeIngredients.map((ingredient) => ({
+            ...ingredient,
+            recipeId,
+            createdAt,
+          })),
+        )
+        .returning({ ingredientId: ingredients.id });
+
+      if (ingredientResult.length < 1) {
+        console.log(
+          `inserted ingredients but got an empty result:\n  ${result}`,
+        );
+        await trx.rollback();
+        return;
+      }
     }
     return recipeId;
   });
@@ -81,8 +93,7 @@ export const createRecipeInferAuthor = async ({
   const result = await getAuthor(author);
   const authorId = result?.[0]?.id;
   if (authorId) {
-    await createRecipe({ ...args, authorId });
-    return;
+    return await createRecipe({ ...args, authorId });
   }
   return await createRecipe({
     ...args,
