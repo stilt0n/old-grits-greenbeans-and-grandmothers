@@ -31,6 +31,7 @@ export const action: ActionFunction = async (args) => {
     receivedValues: defaultValues,
   } = await getValidatedFormData<RecipeFormData>(args.request, resolver);
   if (errors) {
+    console.error('there were validation errors!');
     return json({ errors, defaultValues });
   }
 
