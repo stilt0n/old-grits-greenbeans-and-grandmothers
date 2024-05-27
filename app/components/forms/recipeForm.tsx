@@ -1,12 +1,13 @@
 import { Form } from '@remix-run/react';
 import { FC, useId } from 'react';
-import { useFieldArray } from 'react-hook-form';
+import { Controller, useFieldArray } from 'react-hook-form';
 import { useRemixForm } from 'remix-hook-form';
 import { FormInput } from './formInput';
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
 import { Textarea } from '../ui/textarea';
 import { z } from 'zod';
+import { zfd } from 'zod-form-data';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 export const useRecipeForm = (defaultValues: RecipeFormData) => {
@@ -22,11 +23,11 @@ export const useRecipeForm = (defaultValues: RecipeFormData) => {
   });
 
   const { fields, append, remove } = useFieldArray({
-    name: 'ingredients',
+    name: 'recipeIngredients',
     control,
   });
 
-  return { handleSubmit, errors, register, fields, append, remove };
+  return { handleSubmit, errors, register, fields, append, remove, control };
 };
 
 interface RecipeFormProps extends ReturnType<typeof useRecipeForm> {}
@@ -38,6 +39,7 @@ export const RecipeForm: FC<RecipeFormProps> = ({
   fields,
   append,
   remove,
+  control,
 }) => {
   const textareaId = useId();
   return (
@@ -59,27 +61,51 @@ export const RecipeForm: FC<RecipeFormProps> = ({
       <ul>
         {fields.map((ingredient, index) => (
           <li key={ingredient.id} className='grid grid-cols-7 gap-2 items-end'>
-            <FormInput
-              className='col-span-2'
-              label='Ingredient name'
-              type='text'
-              errorMessage={errors?.ingredients?.[index]?.name?.message}
-              required
-              {...register(`ingredients.${index}.name`)}
+            <Controller
+              render={({ field }) => (
+                <FormInput
+                  className='col-span-2'
+                  label='Ingredient name'
+                  type='text'
+                  errorMessage={
+                    errors?.recipeIngredients?.[index]?.name?.message
+                  }
+                  required
+                  {...field}
+                />
+              )}
+              name={`recipeIngredients.${index}.name`}
+              control={control}
             />
-            <FormInput
-              className='col-span-2'
-              label='Ingredient amount'
-              type='text'
-              errorMessage={errors?.ingredients?.[index]?.amount?.message}
-              {...register(`ingredients.${index}.amount`)}
+            <Controller
+              render={({ field }) => (
+                <FormInput
+                  className='col-span-2'
+                  label='Ingredient amount'
+                  type='number'
+                  errorMessage={
+                    errors?.recipeIngredients?.[index]?.amount?.message
+                  }
+                  {...field}
+                />
+              )}
+              name={`recipeIngredients.${index}.amount`}
+              control={control}
             />
-            <FormInput
-              className='col-span-2'
-              label='Ingredient unit'
-              type='text'
-              errorMessage={errors?.ingredients?.[index]?.unit?.message}
-              {...register(`ingredients.${index}.unit`)}
+            <Controller
+              render={({ field }) => (
+                <FormInput
+                  className='col-span-2'
+                  label='Ingredient unit'
+                  type='text'
+                  errorMessage={
+                    errors?.recipeIngredients?.[index]?.unit?.message
+                  }
+                  {...field}
+                />
+              )}
+              name={`recipeIngredients.${index}.unit`}
+              control={control}
             />
             <Button
               className='col-span-1'
@@ -95,7 +121,9 @@ export const RecipeForm: FC<RecipeFormProps> = ({
       <Button
         type='button'
         aria-label='add ingredient'
-        onClick={() => append({ name: 'New Ingredient', amount: '', unit: '' })}
+        onClick={() =>
+          append({ name: 'New Ingredient', amount: undefined, unit: '' })
+        }
       >
         Add Ingredient
       </Button>
@@ -108,9 +136,9 @@ export const RecipeForm: FC<RecipeFormProps> = ({
   );
 };
 
-const ingredientSchema = z.object({
+const ingredientSchema = zfd.formData({
   name: z.string().min(1, 'ingredient name cannot be blank'),
-  amount: z.string().optional(),
+  amount: zfd.numeric(z.number().optional()),
   unit: z.string().optional(),
 });
 
@@ -121,7 +149,7 @@ const recipeSchema = z.object({
     .min(1, 'recipe description cannot be blank')
     .max(255, 'recipe description should be less than 255 characters'),
   author: z.string().optional(),
-  ingredients: z.array(ingredientSchema),
+  recipeIngredients: z.array(ingredientSchema),
   instructions: z.string().min(1, 'recipe instructions cannot be blank'),
 });
 
