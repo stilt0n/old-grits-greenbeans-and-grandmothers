@@ -53,7 +53,7 @@ const CreateRecipe = () => {
     description: '',
     instructions: '',
     author: '',
-    ingredients: [{ name: '', amount: '', unit: '' }],
+    recipeIngredients: [{ name: '', amount: undefined, unit: '' }],
   });
 
   return <RecipeForm {...recipeFormProps} />;
