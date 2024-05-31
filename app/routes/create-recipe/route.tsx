@@ -56,7 +56,7 @@ const CreateRecipe = () => {
     recipeIngredients: [{ name: '', amount: undefined, unit: '' }],
   });
 
-  return <RecipeForm {...recipeFormProps} />;
+  return <RecipeForm mode='create' {...recipeFormProps} />;
 };
 
 export default CreateRecipe;
