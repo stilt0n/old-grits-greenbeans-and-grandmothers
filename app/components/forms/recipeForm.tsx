@@ -30,7 +30,9 @@ export const useRecipeForm = (defaultValues: RecipeFormData) => {
   return { handleSubmit, errors, register, fields, append, remove, control };
 };
 
-interface RecipeFormProps extends ReturnType<typeof useRecipeForm> {}
+interface RecipeFormProps extends ReturnType<typeof useRecipeForm> {
+  mode: 'create' | 'edit';
+}
 
 export const RecipeForm: FC<RecipeFormProps> = ({
   handleSubmit,
@@ -40,6 +42,7 @@ export const RecipeForm: FC<RecipeFormProps> = ({
   append,
   remove,
   control,
+  mode,
 }) => {
   const textareaId = useId();
   return (
@@ -48,6 +51,7 @@ export const RecipeForm: FC<RecipeFormProps> = ({
         label='Recipe name'
         type='text'
         errorMessage={errors?.name?.message}
+        disabled={mode === 'edit'}
         required
         {...register('name')}
       />
