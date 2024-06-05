@@ -1,6 +1,7 @@
-import { desc, eq } from 'drizzle-orm';
+import { desc, eq, asc } from 'drizzle-orm';
 import { db } from './db';
 import { recipes, ingredients, authors } from './schema';
+import { partition } from '~/utils/helpers';
 
 interface SharedCreateRecipeArgs {
   name: string;
@@ -175,4 +176,120 @@ export const getAuthor = async (identifier: string | number) => {
         ? eq(authors.name, identifier)
         : eq(authors.id, identifier),
     );
+};
+
+interface UpdateRecipeArgs {
+  id: number;
+  name: string;
+  instructions: string;
+  description: string;
+  author: string;
+  recipeIngredients?: {
+    name: string;
+    amount?: number;
+    unit?: string;
+    id?: number;
+  }[];
+}
+
+interface IngredientFields {
+  id?: number;
+  name: string;
+  amount?: number;
+  unit?: string;
+}
+
+const ingredientEquals = (a: IngredientFields, b: IngredientFields) => {
+  return (
+    a.id === b.id &&
+    a.name === b.name &&
+    // uses == here because amount/unit can be undefined or null
+    // but we want to treat these as the same thing
+    a.amount == b.amount &&
+    a.unit == b.unit
+  );
+};
+
+export const updateRecipe = async ({
+  recipeIngredients,
+  author,
+  id,
+  ...recipeArgs
+}: UpdateRecipeArgs) => {
+  const result = await getAuthor(author);
+  const shouldCreateAuthor = result.length === 0;
+  return await db.transaction(async (trx) => {
+    try {
+      let authorId: number | undefined;
+      if (shouldCreateAuthor) {
+        [{ authorId }] = await trx
+          .insert(authors)
+          .values({ name: author })
+          .returning({ authorId: authors.id });
+      }
+
+      const updatedFields = authorId ? { ...recipeArgs, authorId } : recipeArgs;
+      trx.update(recipes).set(updatedFields).where(eq(recipes.id, id));
+
+      if (recipeIngredients) {
+        // diff ingredients to see if any changed
+        const existingIngredients = await trx
+          .select()
+          .from(ingredients)
+          .where(eq(ingredients.recipeId, id))
+          .orderBy(asc(ingredients.id));
+
+        const [newIngredients, modifiedIngredients] = partition(
+          recipeIngredients,
+          ({ id }) => id === undefined,
+        );
+
+        // check if any ingredients were modified so that we can
+        // avoid unnecessary deletions when nothing has changed
+        modifiedIngredients.sort((a, b) => a.id! - b.id!);
+
+        const isUnchanged =
+          existingIngredients.length === modifiedIngredients.length &&
+          modifiedIngredients.every((ingredient, i) =>
+            ingredientEquals(
+              ingredient,
+              existingIngredients[i] as IngredientFields,
+            ),
+          );
+
+        // This is probably not the most efficient approach but it simplifies
+        // things to just delete and remake all the ingredients when a change
+        // is detected. This can be optimized later if necessary, or even
+        // migrated to a document store like MongoDB which was realistically
+        // the better fit for this type of data in the first place.
+        if (!isUnchanged) {
+          const insertIngredients = [
+            ...newIngredients,
+            ...modifiedIngredients,
+          ].map(({ name, amount, unit }) => ({
+            name,
+            amount,
+            unit,
+            recipeId: id,
+          }));
+          trx.delete(ingredients).where(eq(ingredients.recipeId, id));
+          trx.insert(ingredients).values(insertIngredients);
+        } else {
+          trx.insert(ingredients).values(
+            newIngredients.map((ingredient) => ({
+              ...ingredient,
+              recipeId: id,
+            })),
+          );
+        }
+      } else {
+        trx.delete(ingredients).where(eq(ingredients.recipeId, id));
+      }
+    } catch (err) {
+      console.log(
+        `Got an error trying to update recipe:\n${err instanceof Error ? err.message : String(err)}`,
+      );
+      trx.rollback();
+    }
+  });
 };
