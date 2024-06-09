@@ -10,7 +10,10 @@ import { z } from 'zod';
 import { zfd } from 'zod-form-data';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-export const useRecipeForm = (defaultValues: RecipeFormData) => {
+export const useRecipeForm = (
+  defaultValues: RecipeFormData,
+  mode?: 'create' | 'edit',
+) => {
   const {
     handleSubmit,
     formState: { errors },
@@ -18,7 +21,7 @@ export const useRecipeForm = (defaultValues: RecipeFormData) => {
     control,
   } = useRemixForm<RecipeFormData>({
     mode: 'onSubmit',
-    resolver,
+    resolver: createResolver(mode ?? 'create'),
     defaultValues,
   });
 
@@ -111,6 +114,13 @@ export const RecipeForm: FC<RecipeFormProps> = ({
               name={`recipeIngredients.${index}.unit`}
               control={control}
             />
+            {mode === 'edit' && ingredient.id ? (
+              <Controller
+                render={({ field }) => <input type='hidden' {...field} />}
+                name={`recipeIngredients.${index}.id`}
+                control={control}
+              />
+            ) : null}
             <Button
               className='col-span-1'
               type='button'
@@ -144,6 +154,9 @@ const ingredientSchema = zfd.formData({
   name: z.string().min(1, 'ingredient name cannot be blank'),
   amount: zfd.numeric(z.number().optional()),
   unit: z.string().optional(),
+  // Used when updating a recipe since we will need to
+  // either insert new ingredients or replace old ones
+  id: zfd.numeric(z.number().optional()),
 });
 
 const recipeSchema = z.object({
@@ -157,6 +170,20 @@ const recipeSchema = z.object({
   instructions: z.string().min(1, 'recipe instructions cannot be blank'),
 });
 
-export const resolver = zodResolver(recipeSchema);
+const recipeEditSchema = z.object({
+  name: z.string().min(1, 'recipe name cannot be blank'),
+  description: z
+    .string()
+    .min(1, 'recipe description cannot be blank')
+    .max(255, 'recipe description should be less than 255 characters'),
+  author: z.string(),
+  recipeIngredients: z.array(ingredientSchema),
+  instructions: z.string().min(1, 'recipe instructions cannot be blank'),
+});
+
+export const createResolver = (mode: 'create' | 'edit') => {
+  return zodResolver(mode === 'create' ? recipeSchema : recipeEditSchema);
+};
 
 export type RecipeFormData = z.infer<typeof recipeSchema>;
+export type RecipeEditFormData = z.infer<typeof recipeEditSchema>;

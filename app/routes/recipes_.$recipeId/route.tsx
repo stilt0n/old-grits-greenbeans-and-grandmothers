@@ -33,7 +33,6 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 const Recipe = () => {
   const { recipe } = useLoaderData<typeof loader>();
-  console.log(recipe);
   return (
     <div>
       <h1>{recipe.name}</h1>
