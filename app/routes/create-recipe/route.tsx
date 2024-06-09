@@ -4,7 +4,7 @@ import { checkRole } from '~/utils/checkRole.server';
 import {
   useRecipeForm,
   RecipeForm,
-  resolver,
+  createResolver,
   RecipeFormData,
 } from '~/components/forms/recipeForm';
 import { createRecipeInferAuthor } from '../../../db/operations';
@@ -24,6 +24,8 @@ export const action: ActionFunction = async (args) => {
   if (!isAuthorized) {
     return;
   }
+
+  const resolver = createResolver('create');
 
   const {
     errors,
