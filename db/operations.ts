@@ -149,6 +149,34 @@ export const getRecipe = async (recipeId: number) => {
     with: {
       ingredients: {
         columns: {
+          id: true,
+          name: true,
+          amount: true,
+          unit: true,
+        },
+      },
+      author: {
+        columns: {
+          name: true,
+        },
+      },
+    },
+    where: eq(recipes.id, recipeId),
+  });
+};
+
+export const getRecipeWithDescription = async (recipeId: number) => {
+  return await db.query.recipes.findFirst({
+    columns: {
+      name: true,
+      instructions: true,
+      authorId: true,
+      description: true,
+    },
+    with: {
+      ingredients: {
+        columns: {
+          id: true,
           name: true,
           amount: true,
           unit: true,
@@ -229,7 +257,7 @@ export const updateRecipe = async ({
       }
 
       const updatedFields = authorId ? { ...recipeArgs, authorId } : recipeArgs;
-      trx.update(recipes).set(updatedFields).where(eq(recipes.id, id));
+      await trx.update(recipes).set(updatedFields).where(eq(recipes.id, id));
 
       if (recipeIngredients) {
         // diff ingredients to see if any changed
@@ -272,10 +300,10 @@ export const updateRecipe = async ({
             unit,
             recipeId: id,
           }));
-          trx.delete(ingredients).where(eq(ingredients.recipeId, id));
-          trx.insert(ingredients).values(insertIngredients);
-        } else {
-          trx.insert(ingredients).values(
+          await trx.delete(ingredients).where(eq(ingredients.recipeId, id));
+          await trx.insert(ingredients).values(insertIngredients);
+        } else if (newIngredients.length > 0) {
+          await trx.insert(ingredients).values(
             newIngredients.map((ingredient) => ({
               ...ingredient,
               recipeId: id,
@@ -283,13 +311,13 @@ export const updateRecipe = async ({
           );
         }
       } else {
-        trx.delete(ingredients).where(eq(ingredients.recipeId, id));
+        await trx.delete(ingredients).where(eq(ingredients.recipeId, id));
       }
     } catch (err) {
       console.log(
         `Got an error trying to update recipe:\n${err instanceof Error ? err.message : String(err)}`,
       );
-      trx.rollback();
+      await trx.rollback();
     }
   });
 };

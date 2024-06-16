@@ -5,7 +5,7 @@ import {
   useRouteError,
 } from '@remix-run/react';
 import { checkRole } from '~/utils/checkRole.server';
-import { getRecipe, updateRecipe } from '../../../db/operations';
+import { getRecipeWithDescription, updateRecipe } from '../../../db/operations';
 import { HandledError, UnhandledError } from '~/components/errors';
 import {
   useRecipeForm,
@@ -31,7 +31,7 @@ export const loader: LoaderFunction = async (args) => {
     );
   }
 
-  const recipe = await getRecipe(pageId);
+  const recipe = await getRecipeWithDescription(pageId);
   if (!recipe) {
     throw json(
       { message: 'The recipe you are looking for does not exist.' },
@@ -39,7 +39,12 @@ export const loader: LoaderFunction = async (args) => {
     );
   }
 
-  return json({ recipe });
+  // TODO: author should probably not be required since it isn't in the db schema
+  // I should update the db operation to not require it and then update this code
+  const { author, ingredients: recipeIngredients, ...recipeData } = recipe;
+  return json({
+    recipe: { ...recipeData, recipeIngredients, author: author?.name },
+  });
 };
 
 export const action: ActionFunction = async (args) => {
@@ -70,10 +75,13 @@ export const action: ActionFunction = async (args) => {
   }
 
   await updateRecipe({ ...data, id: result });
+
+  return redirect(`/recipes/${result}`);
 };
 
 const RecipeEdit = () => {
   const { recipe } = useLoaderData<typeof loader>();
+  console.log(`recipe: ${JSON.stringify(recipe)}`);
   const recipeFormProps = useRecipeForm(recipe, 'edit');
   return <RecipeForm {...recipeFormProps} mode='edit' />;
 };
@@ -115,7 +123,7 @@ const parseRecipeId = async (
     };
   }
 
-  const recipe = await getRecipe(numericId);
+  const recipe = await getRecipeWithDescription(numericId);
   if (!recipe) {
     return {
       valid: false,
