@@ -85,7 +85,7 @@ export const RecipeForm: FC<RecipeFormProps> = ({
               control={control}
             />
             <Controller
-              render={({ field }) => (
+              render={({ field: { value, ...restField } }) => (
                 <FormInput
                   className='col-span-2'
                   label='Ingredient amount'
@@ -93,7 +93,10 @@ export const RecipeForm: FC<RecipeFormProps> = ({
                   errorMessage={
                     errors?.recipeIngredients?.[index]?.amount?.message
                   }
-                  {...field}
+                  // This prevents the input from transitioning from uncontrolled to controlled
+                  // which React gives a warning about
+                  value={value ?? ''}
+                  {...restField}
                 />
               )}
               name={`recipeIngredients.${index}.amount`}
