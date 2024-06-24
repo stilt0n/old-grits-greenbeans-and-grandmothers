@@ -9,7 +9,7 @@ import {
   useRouteError,
 } from '@remix-run/react';
 import { rootAuthLoader } from '@clerk/remix/ssr.server';
-import { ClerkApp, SignedIn } from '@clerk/remix';
+// import { ClerkApp, SignedIn } from '@clerk/remix';
 import { HandledError, UnhandledError } from '~/components/errors';
 import { SiteHeader, SiteHeaderLink } from '~/components/layout/siteHeader';
 import stylesheet from '~/tailwind.css?url';
@@ -19,6 +19,7 @@ export const links: LinksFunction = () => {
 };
 
 export const loader: LoaderFunction = async (args) => {
+  return null;
   try {
     const response = await rootAuthLoader(args);
     return response;
@@ -53,9 +54,9 @@ const App = () => {
       <SiteHeader>
         <SiteHeaderLink to='/recipes'>Recipes</SiteHeaderLink>
         <SiteHeaderLink to='/about'>About</SiteHeaderLink>
-        <SignedIn>
+        {/* <SignedIn>
           <SiteHeaderLink to='/permissionsTest'>temporary</SiteHeaderLink>
-        </SignedIn>
+        </SignedIn> */}
       </SiteHeader>
       <main className='mt-2 px-6'>
         <Outlet />
@@ -77,4 +78,5 @@ export const ErrorBoundary = () => {
   );
 };
 
-export default ClerkApp(App);
+export default App;
+// export default ClerkApp(App);
