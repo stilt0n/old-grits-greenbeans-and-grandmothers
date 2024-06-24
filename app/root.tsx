@@ -1,4 +1,4 @@
-import { LinksFunction, LoaderFunction } from '@vercel/remix';
+import { LinksFunction, LoaderFunction, json } from '@vercel/remix';
 import {
   Links,
   Meta,
@@ -19,7 +19,14 @@ export const links: LinksFunction = () => {
 };
 
 export const loader: LoaderFunction = async (args) => {
-  return await rootAuthLoader(args);
+  try {
+    const response = await rootAuthLoader(args);
+    return response;
+  } catch (e) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    console.error(`Error in loader function: ${(e as any)?.message}`);
+    throw json({ error: e });
+  }
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
