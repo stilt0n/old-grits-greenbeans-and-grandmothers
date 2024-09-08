@@ -1,36 +1,5 @@
-# Welcome to Remix + Vite!
+# Deprecated
 
-📖 See the [Remix docs](https://remix.run/docs) and the [Remix Vite docs](https://remix.run/docs/en/main/future/vite) for details on supported features.
+This is the first iteration of a recipe site I am building to store a collection of family recipes.
 
-## Development
-
-Run the Vite dev server:
-
-```shellscript
-npm run dev
-```
-
-## Deployment
-
-First, build your app for production:
-
-```sh
-npm run build
-```
-
-Then run the app in production mode:
-
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-- `build/server`
-- `build/client`
+I learned a lot from making this site, but ran into several issues revolving around how I chose to structure the site and decided to rewrite it from scratch.
