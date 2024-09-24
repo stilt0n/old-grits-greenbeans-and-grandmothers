@@ -22,7 +22,7 @@
     "@fontsource/fredericka-the-great": "^5.0.19",
     "@fontsource/lato": "^5.0.20",
     "@hookform/resolvers": "^3.3.4",
-    "@libsql/client": "^0.6.0",
+    "@libsql/client": "^0.10.0",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@remix-run/node": "^2.8.1",
