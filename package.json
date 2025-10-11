@@ -37,7 +37,7 @@
     "isbot": "^4.1.0",
     "lucide-react": "^0.373.0",
     "npm": "^10.5.0",
-    "react": "^18.2.0",
+    "react": "^18.3.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.3",
     "remix-hook-form": "^4.3.1",
